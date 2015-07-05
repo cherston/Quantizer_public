@@ -188,6 +188,12 @@ if __name__ == "__main__":
 	else: 
 		maxbeats = int(args.maxbeats)
 
+		#make directories if they don't exist
+	directories = ["../data/unprocessed", "../data/processed", "../output"]
+	for d in directories: 
+		if not os.path.exists("../data/unprocessed"): 
+			os.makedirs(d) 
+			
 	if args.test: 
 		#event ='1A/1A_41_190343_88636558_413.xml'
 		t0 = time.time()
