@@ -1,0 +1,26 @@
+#N canvas 70 55 450 300 10;
+#X obj 178 50 r RPC_midi_max;
+#X obj 182 81 prepend set;
+#X msg 181 107 200;
+#X obj 177 141 + 12;
+#X obj 133 81 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X floatatom 130 165 5 0 0 0 - - -;
+#X obj 94 43 inlet;
+#X obj 176 166 s rpc_newmax;
+#X obj 298 125 sel rpc track lar hec;
+#X msg 351 96;
+#X obj 329 73 list prepend;
+#X floatatom 281 81 5 0 0 0 - - -;
+#X obj 309 55 \$1;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 5 0;
+#X connect 3 0 7 0;
+#X connect 4 0 2 0;
+#X connect 6 0 4 0;
+#X connect 10 0 9 0;
+#X connect 12 0 8 0;
+#X connect 12 0 10 0;
+#X connect 12 0 11 0;

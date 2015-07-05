@@ -1,0 +1,15 @@
+import random
+
+a = int(random.uniform(0,70))
+x = []
+y = []
+z = []
+
+for i in range(0,a): 
+        x.append(random.uniform(-100,100))
+	y.append(random.uniform(-100,100))
+	z.append(random.uniform(-100,100))
+print a
+print "<x>\n" + " ".join(str(i) for i in x) + "\n</x>"
+print "<y>\n" + " ".join(str(i) for i in y) + "\n</y>"
+print "<z>\n" + " ".join(str(i) for i in z) + "\n</z>"

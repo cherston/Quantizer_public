@@ -1,0 +1,368 @@
+#N canvas 77 -797 1369 754 10;
+#X obj 210 67 cnv 15 120 150 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 240 126 Blues;
+#X text 240 141 Major;
+#X text 240 155 Aeolian;
+#X text 241 170 Lydian;
+#X text 241 185 Twilight Zone;
+#N canvas 161 154 464 521 selectScale 0;
+#X obj 143 324 s scale;
+#X obj 135 4 loadbang;
+#X obj 239 -67 inlet scale;
+#X obj 165 -40 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 216 -7 0 1 2 3 4 5 6 7 8 9 10 11;
+#X msg 147 42 0 2 5 7 9;
+#X msg 162 76 0 2 4 6 8 10;
+#X msg 193 113 0 3 5 6 7 10;
+#X msg 193 138 0 2 4 5 7 9 11;
+#X msg 185 178 0 2 3 5 7 8 10;
+#X msg 214 206 0 2 4 6 7 9 11;
+#X msg 220 239 4 8 9 10;
+#X obj 238 -39 sel 0 1 2 3 4 5 6 7 8;
+#X msg 292 267 0 3 5 7 10;
+#X connect 1 0 5 0;
+#X connect 2 0 3 0;
+#X connect 2 0 12 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 0;
+#X connect 6 0 0 0;
+#X connect 7 0 0 0;
+#X connect 8 0 0 0;
+#X connect 9 0 0 0;
+#X connect 10 0 0 0;
+#X connect 11 0 0 0;
+#X connect 12 0 4 0;
+#X connect 12 1 5 0;
+#X connect 12 2 6 0;
+#X connect 12 3 7 0;
+#X connect 12 4 8 0;
+#X connect 12 5 9 0;
+#X connect 12 6 10 0;
+#X connect 12 7 11 0;
+#X connect 12 8 13 0;
+#X connect 13 0 0 0;
+#X restore 223 220 pd selectScale;
+#X obj 221 81 vradio 15 1 1 9 empty empty empty 0 -8 0 10 -262144 -45076
+-1 8;
+#X text 240 111 Whole Tone;
+#X text 240 94 Pentatonic;
+#X text 239 79 Chromatic;
+#X obj 334 201 cnv 15 350 75 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 413 228 hsl 128 15 -2.4 2.4 0 1 min_eta initialize empty -2
+-8 0 10 -262144 -1 -1 0 1;
+#X obj 413 253 hsl 128 15 -2.4 2.4 0 1 max_eta initialize empty -2
+-8 0 10 -262144 -1 -1 12700 1;
+#X text 552 252 Maximum Eta;
+#X floatatom 370 227 5 -2.4 2.4 0 - min_eta -;
+#X floatatom 370 252 5 -2.4 2.4 0 - max_eta -;
+#X text 552 226 Minimum Eta;
+#X obj 334 282 cnv 15 350 75 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 413 309 hsl 128 15 -3.2 3.2 0 1 min_phi initialize empty -2
+-8 0 10 -262144 -1 -1 0 1;
+#X obj 413 334 hsl 128 15 -3.2 3.2 0 1 max_phi initialize empty -2
+-8 0 10 -262144 -1 -1 12700 1;
+#X floatatom 370 308 5 -3.2 3.2 0 - min_phi -;
+#X floatatom 370 333 5 -3.2 3.2 0 - max_phi -;
+#X text 552 307 Minimum Phi;
+#X text 552 333 Maximum Phi;
+#X obj 4 31 cnv 15 1083 30 empty empty empty 20 15 1 14 -261033 -33289
+0;
+#X text 8 37 ATLAS Collision Data Stream Control Panel;
+#X obj 3 -35 cnv 15 100 60 initialize empty empty 20 12 0 14 -232576
+-66577 0;
+#X obj 339 66 cnv 15 166 130 empty empty empty 20 12 0 14 -261864 -66577
+0;
+#X obj 383 104 nbx 4 14 -2.4 2.4 0 1 RPC_min initialize empty 0 -8
+0 10 -228856 -1 -1 -2.4 256;
+#X obj 447 103 nbx 3 14 -2.4 2.4 0 1 RPC_max initialize empty 0 -8
+0 10 -228856 -1 -1 2.4 256;
+#X obj 385 124 nbx 2 14 5 40 0 1 TR_min empty empty 0 -8 0 10 -228856
+-1 -1 5 256;
+#X obj 447 124 nbx 2 14 5 40 0 1 TR_max initialize empty 0 -8 0 10
+-228856 -1 -1 40 256;
+#X obj 384 146 nbx 5 14 0.6 1 0 0 hec_min initialize empty 0 -8 0 10
+-228856 -1 -1 0.6 256;
+#X obj 446 146 nbx 2 14 0.71 1 0 1 hec_max initialize empty 0 -8 0
+10 -228856 -1 -1 1 256;
+#X text 343 143 HEC E;
+#X text 343 166 LAr E;
+#X obj 384 166 nbx 5 14 0.05 1 0 1 lar_min initialize empty 0 -8 0
+10 -228856 -1 -1 0.05 256;
+#X obj 445 166 nbx 5 14 0.5 0.1 0 1 lar_max initialize empty 0 -8 0
+10 -228856 -1 -1 0.1 256;
+#X obj 220 230 cnv 15 100 115 empty empty empty 20 12 0 14 -228856
+-66577 0;
+#X obj 225 240 tgl 15 1 RPC_on initialize empty 17 7 0 10 -262144 -1
+-1 1 1;
+#X obj 226 261 tgl 15 1 Track_on initialize empty 17 7 0 10 -262144
+-1 -1 1 1;
+#X obj 226 282 tgl 15 1 hec_on initialize empty 17 7 0 10 -262144 -1
+-1 1 1;
+#X text 248 280 HEC;
+#X obj 226 303 tgl 15 1 lar_on initialize empty 17 7 0 10 -262144 -1
+-1 1 1;
+#X text 248 301 LAr;
+#X obj 687 247 cnv 15 170 176 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#X obj 807 250 nbx 2 14 0 180 0 1 RPC_midi_min initialize empty 0 -8
+0 10 -228856 -1 -1 38 256;
+#X obj 808 270 nbx 3 14 0 200 0 1 RPC_midi_max initialize empty 0 -8
+0 10 -228856 -1 -1 79 256;
+#X obj 807 290 nbx 2 14 0 100 0 1 TR_midi_min initialize empty 0 -8
+0 10 -228856 -1 -1 42 256;
+#X obj 808 310 nbx 3 14 0 200 0 1 TR_midi_max initialize empty 0 -8
+0 10 -228856 -1 -1 80 256;
+#X obj 809 330 nbx 2 14 0 100 0 1 lar_midi_min initialize empty 0 -8
+0 10 -228856 -1 -1 47 256;
+#X obj 808 349 nbx 3 14 0 200 0 1 lar_midi_max initialize empty 0 -8
+0 10 -228856 -1 -1 128 256;
+#X text 691 329 LAR Minimum Midi;
+#X text 690 346 LAR Maximum Midi;
+#X obj 808 369 nbx 2 14 0 100 0 1 hec_midi_min initialize empty 0 -8
+0 10 -228856 -1 -1 27 256;
+#X obj 807 388 nbx 3 14 0 200 0 1 hec_midi_max initialize empty 0 -8
+0 10 -228856 -1 -1 60 256;
+#X text 690 368 HEC Minimum Midi;
+#X text 689 385 HEC Maximum Midi;
+#X text 691 250 RPC Minimum Midi;
+#X text 690 269 RPC Maximum Midi;
+#X text 690 309 Track Maximum Midi;
+#X text 691 290 Track Minimum Midi;
+#X text 247 239 RPC;
+#X text 247 259 Tracks;
+#X text 342 101 RPC;
+#X text 341 122 Track;
+#X text 384 86 min;
+#X text 449 85 max;
+#X text 343 67 Set Data Range Parameters;
+#X obj 687 65 cnv 15 170 176 empty empty empty 20 12 0 14 -261234 -66577
+0;
+#X text 691 68 RPC Velocity;
+#X text 690 87 RPC Duration;
+#X text 691 108 Track Velocity;
+#X text 690 127 Track Duration;
+#X text 691 147 LAR Velocity;
+#X text 690 164 LAR Duration;
+#X text 690 186 HEC Velocity;
+#X text 689 203 HEC Duration;
+#X obj 785 69 nbx 5 14 0 127 0 1 rpc_v initialize empty 0 -8 0 10 -262144
+-1 -1 127 256;
+#X obj 786 108 nbx 5 14 0 127 0 1 track_v initialize empty 0 -8 0 10
+-262144 -1 -1 80 256;
+#X obj 787 128 nbx 5 14 100 8000 0 1 track_d initialize empty 0 -8
+0 10 -262144 -1 -1 877 256;
+#X obj 787 149 nbx 5 14 0 127 0 1 lar_v initialize empty 0 -8 0 10
+-262144 -1 -1 70 256;
+#X obj 786 170 nbx 5 14 100 8000 0 1 lar_d initialize empty 0 -8 0
+10 -262144 -1 -1 604 256;
+#X obj 786 190 nbx 5 14 0 127 0 1 hec_v initialize empty 0 -8 0 10
+-262144 -1 -1 63 256;
+#X obj 787 208 nbx 5 14 100 8000 0 1 hec_d initialize empty 0 -8 0
+10 -262144 -1 -1 1571 256;
+#X obj 785 88 nbx 5 14 100 8000 0 1 rpc_d initialize empty 0 -8 0 10
+-262144 -1 -1 1277 256;
+#X obj 35 -21 bng 30 250 50 0 initialize empty empty 17 7 0 20 -262144
+-4032 -1;
+#X obj 482 361 cnv 15 200 60 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 574 370 LAr Beats;
+#X obj 492 371 tgl 15 1 b_1 initialize empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 532 371 tgl 15 1 b_3 initialize empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 553 371 tgl 15 1 b_4 initialize empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 512 371 tgl 15 1 b_2 initialize empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 492 391 tgl 15 1 h_1 initialize empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 532 391 tgl 15 1 h_3 initialize empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 553 391 tgl 15 1 h_4 initialize empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 512 391 tgl 15 1 h_2 initialize empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X text 575 388 HEC Beats;
+#X obj 217 360 cnv 15 260 60 empty empty empty 20 12 0 14 -204800 -66577
+0;
+#X text 222 365 velocity increase on first LAr beat;
+#X text 222 394 duration increase on first LAr beat;
+#X obj 861 83 cnv 10 225 75 empty empty empty 20 12 0 14 -232351 -66577
+0;
+#N canvas 582 200 450 300 tcmidi 0;
+#X obj 188 41 inlet;
+#X obj 256 42 inlet;
+#X floatatom 6 77 5 0 0 0 - - -;
+#X obj 95 43 r track_pt;
+#X obj 166 88 >;
+#X obj 300 42 inlet;
+#X obj 244 168 ctlout 1;
+#X obj 190 155 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 263 72 5 0 0 0 - - -;
+#X obj 215 124 f;
+#X obj 166 115 sel 1;
+#X obj 122 119 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 205 73 5 0 0 0 - - -;
+#X connect 0 0 4 1;
+#X connect 0 0 12 0;
+#X connect 1 0 8 0;
+#X connect 1 0 9 1;
+#X connect 3 0 2 0;
+#X connect 3 0 4 0;
+#X connect 4 0 10 0;
+#X connect 4 0 11 0;
+#X connect 5 0 6 2;
+#X connect 9 0 6 0;
+#X connect 9 0 7 0;
+#X connect 10 0 9 0;
+#X restore 986 162 pd tcmidi;
+#X text 870 137 to channel:;
+#X text 866 90 if track energy greater than:;
+#X obj 861 184 cnv 10 225 75 empty empty empty 20 12 0 14 -232351 -66577
+0;
+#N canvas 582 200 450 300 tcmidi 0;
+#X obj 188 41 inlet;
+#X obj 256 42 inlet;
+#X floatatom 6 77 5 0 0 0 - - -;
+#X obj 166 88 >;
+#X obj 300 42 inlet;
+#X obj 244 168 ctlout 1;
+#X obj 190 155 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 263 72 5 0 0 0 - - -;
+#X floatatom 193 68 5 0 0 0 - - -;
+#X obj 215 124 f;
+#X obj 166 115 sel 1;
+#X obj 95 43 r etmiss;
+#X connect 0 0 3 1;
+#X connect 0 0 8 0;
+#X connect 1 0 7 0;
+#X connect 1 0 9 1;
+#X connect 3 0 10 0;
+#X connect 4 0 5 2;
+#X connect 9 0 5 0;
+#X connect 9 0 6 0;
+#X connect 10 0 9 0;
+#X connect 11 0 2 0;
+#X connect 11 0 3 0;
+#X restore 986 263 pd tcmidi;
+#X text 870 238 to channel:;
+#X obj 859 284 cnv 10 225 75 empty empty empty 20 12 0 14 -232351 -66577
+0;
+#N canvas 582 200 450 300 tcmidi 0;
+#X obj 188 41 inlet;
+#X obj 256 42 inlet;
+#X floatatom 6 77 5 0 0 0 - - -;
+#X obj 166 88 >;
+#X obj 300 42 inlet;
+#X obj 244 168 ctlout 1;
+#X obj 190 155 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 263 72 5 0 0 0 - - -;
+#X floatatom 193 68 5 0 0 0 - - -;
+#X obj 215 124 f;
+#X obj 166 115 sel 1;
+#X obj 84 41 r effectivesum;
+#X connect 0 0 3 1;
+#X connect 0 0 8 0;
+#X connect 1 0 7 0;
+#X connect 1 0 9 1;
+#X connect 3 0 10 0;
+#X connect 4 0 5 2;
+#X connect 9 0 5 0;
+#X connect 9 0 6 0;
+#X connect 10 0 9 0;
+#X connect 11 0 2 0;
+#X connect 11 0 3 0;
+#X restore 984 363 pd tcmidi;
+#X text 868 338 to channel:;
+#X text 866 191 if etmiss greater than:;
+#X text 864 291 if effective sum greater than:;
+#X text 864 63 Some examples of control midi msgs;
+#X obj 437 367 nbx 3 14 -1e+37 1e+37 0 1 vel_increase initialize empty
+0 -8 0 10 -262144 -1 -1 68 256;
+#X obj 438 395 nbx 3 14 -1e+37 1e+37 0 1 dur_increase initialize empty
+0 -8 0 10 -262144 -1 -1 501 256;
+#X obj 1047 89 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 12 256;
+#X obj 1048 132 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0
+10 -262144 -1 -1 12 256;
+#X obj 1048 111 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0
+10 -262144 -1 -1 3 256;
+#X obj 1045 191 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0
+10 -262144 -1 -1 0 256;
+#X obj 1046 234 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0
+10 -262144 -1 -1 0 256;
+#X obj 1046 211 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0
+10 -262144 -1 -1 0 256;
+#X obj 1046 291 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0
+10 -262144 -1 -1 0 256;
+#X obj 1046 313 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0
+10 -262144 -1 -1 0 256;
+#X obj 1046 337 nbx 3 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0
+10 -262144 -1 -1 0 256;
+#X text 353 204 Set Min/Max Eta (Enabled for Calo);
+#X text 353 285 Set Min/Max Phi (Enabled for Calo);
+#X text 6 74 If using load_all mode:;
+#X obj 4 98 cnv 15 200 200 next_RPC empty empty 20 12 0 14 -261234
+-66577 0;
+#X text 32 106 Load next RPC;
+#X obj 10 127 bng 15 250 50 0 next_track empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 32 126 Load next Track;
+#X obj 10 146 bng 15 250 50 0 next_lar empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 10 166 bng 15 250 50 0 next_hec empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 33 145 Load next LAr Hit;
+#X text 33 164 Load next HEC Hit;
+#X obj 10 107 bng 15 250 50 0 next_RPC empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 18 254 nbx 5 14 -1e+37 1e+37 0 1 tempo initialize empty 0 -8
+0 10 -262144 -1 -1 505 256;
+#X text 17 231 If using precise timing patch:;
+#X text 79 252 Tempo (ms/beat);
+#X obj 492 426 tgl 15 1 t_1 initialize empty 17 7 0 10 -262144 -1 -1
+0 1;
+#X obj 532 426 tgl 15 1 t_3 initialize empty 17 7 0 10 -262144 -1 -1
+0 1;
+#X obj 553 426 tgl 15 1 t_4 initialize empty 17 7 0 10 -262144 -1 -1
+0 1;
+#X obj 512 426 tgl 15 1 t_2 initialize empty 17 7 0 10 -262144 -1 -1
+0 1;
+#X text 576 426 Hi Hat (For Al);
+#X text 869 113 send midi:;
+#X text 869 214 send midi:;
+#X text 867 314 send midi:;
+#X obj 688 430 cnv 15 169 100 empty empty empty 20 12 0 14 -204800
+-66577 0;
+#X obj 796 436 nbx 5 14 -1e+37 1e+37 0 1 test_rpc empty empty 0 -8
+0 10 -262144 -1 -1 76 256;
+#X obj 796 455 nbx 5 14 -1e+37 1e+37 0 1 test_track empty empty 0 -8
+0 10 -262144 -1 -1 51 256;
+#X obj 796 473 nbx 5 14 -1e+37 1e+37 0 1 test_hec empty empty 0 -8
+0 10 -262144 -1 -1 0 256;
+#X obj 796 492 nbx 5 14 -1e+37 1e+37 0 1 test_lar empty empty 0 -8
+0 10 -262144 -1 -1 0 256;
+#X text 707 433 RPC Midi Test;
+#X text 698 452 Track Midi Test;
+#X text 710 472 HEC Midi Test;
+#X text 710 490 LAr Midi Test;
+#X text 243 200 Custom;
+#X connect 7 0 6 0;
+#X connect 117 0 103 0;
+#X connect 118 0 103 2;
+#X connect 119 0 103 1;
+#X connect 120 0 107 0;
+#X connect 121 0 107 2;
+#X connect 122 0 107 1;
+#X connect 123 0 110 0;
+#X connect 124 0 110 1;
+#X connect 125 0 110 2;
+#X coords 0 0 2 1 0 0 0;

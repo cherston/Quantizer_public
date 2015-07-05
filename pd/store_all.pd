@@ -1,0 +1,51 @@
+#N canvas 1100 198 681 666 10;
+#X obj 66 58 inlet;
+#X obj 137 57 inlet;
+#X obj 82 191 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X text 79 171 send;
+#X obj 82 276 list append;
+#X obj 247 238 t l;
+#X obj 130 232 list prepend;
+#X obj 188 275 print stored;
+#X text 157 168 -- add --;
+#X floatatom 128 199 5 0 0 0 - - -;
+#X obj 180 315 prepend set;
+#X msg 185 453;
+#X obj 223 456 print;
+#X obj 200 415 list-dripslow;
+#X obj 135 387 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 291 194 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X text 286 172 clear;
+#X obj 196 358 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 132 460 5 0 0 0 - - -;
+#X msg 293 363 1;
+#X obj 336 170 r new_event;
+#X obj 161 513 outlet;
+#X obj 308 452 list-len;
+#X obj 317 512 outlet;
+#X connect 0 0 14 0;
+#X connect 1 0 9 0;
+#X connect 2 0 4 0;
+#X connect 5 0 6 1;
+#X connect 6 0 5 0;
+#X connect 6 0 4 1;
+#X connect 6 0 7 0;
+#X connect 6 0 10 0;
+#X connect 9 0 6 0;
+#X connect 10 0 19 0;
+#X connect 10 0 17 0;
+#X connect 13 0 11 0;
+#X connect 13 0 12 0;
+#X connect 13 0 18 0;
+#X connect 13 0 21 0;
+#X connect 14 0 13 0;
+#X connect 15 0 6 1;
+#X connect 17 0 19 0;
+#X connect 19 0 13 1;
+#X connect 19 0 22 0;
+#X connect 20 0 15 0;
+#X connect 22 0 23 0;
