@@ -204,9 +204,9 @@
 #X obj 372 420 tgl 15 1 h_1 initialize empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 372 474 tgl 15 1 h_3 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 372 502 tgl 15 1 h_4 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 372 447 tgl 15 1 h_2 initialize empty 17 7 0 10 -262144 -1 -1
 1 1;
 #X text 332 400 HEC Beats;
@@ -231,7 +231,7 @@
 #X obj 552 476 tgl 15 1 b_3 initialize empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 552 504 tgl 15 1 b_4 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 552 449 tgl 15 1 b_2 initialize empty 17 7 0 10 -262144 -1 -1
 1 1;
 #X obj 578 423 nbx 3 14 -1e+37 1e+37 0 1 lar_1_v initialize empty 0
@@ -548,11 +548,11 @@
 #X obj 372 526 tgl 15 1 h_5 initialize empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 372 580 tgl 15 1 h_7 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 372 608 tgl 15 1 h_8 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 372 553 tgl 15 1 h_6 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 398 527 nbx 3 14 -1e+37 1e+37 0 1 hec_5_v initialize empty 0
 -8 0 10 -262144 -1 -1 71 256;
 #X obj 448 527 nbx 3 14 -1e+37 1e+37 0 1 hec_5_d initialize empty 0
@@ -572,9 +572,9 @@
 #X obj 552 582 tgl 15 1 b_7 initialize empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 552 610 tgl 15 1 b_8 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 552 555 tgl 15 1 b_6 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 578 529 nbx 3 14 -1e+37 1e+37 0 1 lar_5_v initialize empty 0
 -8 0 10 -262144 -1 -1 76 256;
 #X obj 628 529 nbx 3 14 -1e+37 1e+37 0 1 lar_5_d initialize empty 0
