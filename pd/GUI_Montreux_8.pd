@@ -1,4 +1,4 @@
-#N canvas 85 22 1340 752 10;
+#N canvas 491 22 1340 752 10;
 #X obj 210 67 cnv 15 120 150 empty empty empty 20 12 0 14 -262130 -66577
 0;
 #X text 240 126 Blues;
@@ -97,14 +97,14 @@
 #X obj 220 236 cnv 15 100 115 empty empty empty 20 12 0 14 -228856
 -66577 0;
 #X obj 225 246 tgl 15 1 RPC_on initialize empty 17 7 0 10 -262144 -1
--1 1 1;
+-1 0 1;
 #X obj 226 267 tgl 15 1 Track_on initialize empty 17 7 0 10 -262144
--1 -1 1 1;
+-1 -1 0 1;
 #X obj 226 288 tgl 15 1 hec_on initialize empty 17 7 0 10 -262144 -1
 -1 1 1;
 #X text 248 286 HEC;
 #X obj 226 309 tgl 15 1 lar_on initialize empty 17 7 0 10 -262144 -1
--1 1 1;
+-1 0 1;
 #X text 248 307 LAr;
 #X obj 687 212 cnv 15 170 176 empty empty empty 20 12 0 14 -262130
 -66577 0;
@@ -193,20 +193,20 @@
 #X obj 383 363 cnv 15 300 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 399 370 tgl 15 1 t_1 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 439 370 tgl 15 1 t_3 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 460 370 tgl 15 1 t_4 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 419 370 tgl 15 1 t_2 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X text 573 371 Hi Hat (for Al);
 #X obj 372 420 tgl 15 1 h_1 initialize empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 372 474 tgl 15 1 h_3 initialize empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 372 502 tgl 15 1 h_4 initialize empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 372 447 tgl 15 1 h_2 initialize empty 17 7 0 10 -262144 -1 -1
 1 1;
 #X text 332 400 HEC Beats;
@@ -233,7 +233,7 @@
 #X obj 552 504 tgl 15 1 b_4 initialize empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 552 449 tgl 15 1 b_2 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 578 423 nbx 3 14 -1e+37 1e+37 0 1 lar_1_v initialize empty 0
 -8 0 10 -262144 -1 -1 76 256;
 #X text 573 404 Velocity;
@@ -530,29 +530,28 @@
 #X connect 10 0 5 0;
 #X restore 962 372 pd decrease_hec;
 #X text 868 211 Octave shift;
-#X text 189 371 If using precise timing patch:;
 #X obj 796 459 nbx 5 14 -1e+37 1e+37 0 1 test_hec empty empty 0 -8
-0 10 -262144 -1 -1 75 256;
+0 10 -262144 -1 -1 88 256;
 #X text 710 458 HEC Midi Test;
 #X obj 779 371 r initialize;
 #X obj 936 152 noteout 6;
 #X obj 892 121 f;
 #X obj 481 370 tgl 15 1 t_5 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 521 370 tgl 15 1 t_7 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 542 370 tgl 15 1 t_8 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 501 370 tgl 15 1 t_6 initialize empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 372 526 tgl 15 1 h_5 initialize empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 372 580 tgl 15 1 h_7 initialize empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 372 608 tgl 15 1 h_8 initialize empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 372 553 tgl 15 1 h_6 initialize empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 398 527 nbx 3 14 -1e+37 1e+37 0 1 hec_5_v initialize empty 0
 -8 0 10 -262144 -1 -1 71 256;
 #X obj 448 527 nbx 3 14 -1e+37 1e+37 0 1 hec_5_d initialize empty 0
@@ -593,12 +592,13 @@
 -8 0 10 -262144 -1 -1 661 256;
 #X obj 400 553 nbx 3 14 -1e+37 1e+37 0 1 hec_6_v initialize empty 0
 -8 0 10 -262144 -1 -1 68 256;
+#X text 98 371 If using precise timing patch and uniform mode:;
 #X connect 7 0 6 0;
 #X connect 148 0 154 1;
 #X connect 150 0 154 2;
-#X connect 153 0 187 1;
-#X connect 154 0 186 0;
-#X connect 154 1 186 1;
+#X connect 153 0 186 1;
+#X connect 154 0 185 0;
+#X connect 154 1 185 1;
 #X connect 156 0 172 0;
 #X connect 157 0 173 0;
 #X connect 158 0 174 0;
@@ -607,14 +607,14 @@
 #X connect 161 0 177 0;
 #X connect 162 0 179 0;
 #X connect 163 0 180 0;
-#X connect 178 0 187 0;
-#X connect 185 0 47 0;
-#X connect 185 0 48 0;
-#X connect 185 0 49 0;
-#X connect 185 0 50 0;
-#X connect 185 0 51 0;
-#X connect 185 0 52 0;
-#X connect 185 0 55 0;
-#X connect 185 0 56 0;
-#X connect 187 0 154 0;
+#X connect 178 0 186 0;
+#X connect 184 0 47 0;
+#X connect 184 0 48 0;
+#X connect 184 0 49 0;
+#X connect 184 0 50 0;
+#X connect 184 0 51 0;
+#X connect 184 0 52 0;
+#X connect 184 0 55 0;
+#X connect 184 0 56 0;
+#X connect 186 0 154 0;
 #X coords 0 0 2 1 0 0 0;

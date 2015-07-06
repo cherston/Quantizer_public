@@ -62,17 +62,7 @@ class Analysis(object):
 			print "number of RPC (after cuts): " + str(self.event.RPC.size())
 		else:
 			print "number of RPC (no cuts): " + str(self.event.RPC.size())
-		#Apply max beat cuts (if a max beat is specified). Takes N=MAXBEATS calo hits with highest energy
-		#Note that the selected geometry is still respected (ie/top 30 hits will then be streamed according to e.g. eta values)
-		#Also note that this cut does not apply if uniform distribution is specified (see uniformcut function below)
-		"""##############################################################"""
-		if self.MAXBEATS and not self.UNIFORM_DIST:
-			self.event.HECHits.particles = (sorted(self.event.HECHits.particles,key = operator.attrgetter("E"), reverse = True))[:self.MAXBEATS]
-			print "number of HECHits (after beat cuts): " + str(self.event.HECHits.size())
-			
-			self.event.LArHits.particles = (sorted(self.event.LArHits.particles,key = operator.attrgetter("E"), reverse = True))[:self.MAXBEATS]
-			print "number of LArHits (after beat cuts): " + str(self.event.LArHits.size())
-		"""##############################################################"""
+
 	
 		
 		
@@ -164,16 +154,17 @@ class Analysis(object):
 				self.event.HECHits = self.calcDelays(self.event.HECHits)
 		
 			elif not self.UNIFORM_DIST:
-			
-				signal = lambda x: np.fabs(x.E) > 0.8
-				print "number of HECHits (before strong cuts): " + str(self.event.HECHits.size())
-				self.event.HECHits = ParticleCollection(filter(signal, self.event.HECHits))
-				print "number of HECHits (after strong cuts): " + str(self.event.HECHits.size())
 				
-				signal = lambda x: np.fabs(x.E) > 0.1048
-				print "number of LArHits (before strong cuts): " + str(self.event.LArHits.size())
-				self.event.LArHits = ParticleCollection(filter(signal, self.event.LArHits))
-				print "number of LArHits (after strong cuts): " + str(self.event.LArHits.size())
+				#Apply max beat cuts (if a max beat is specified). Takes N=MAXBEATS calo hits with highest energy
+				#Note that the selected geometry is still respected (ie/top 30 hits will then be streamed according to e.g. eta values)
+				#Also note that this cut does not apply if uniform distribution is specified (see uniformcut function below)
+				"""##############################################################"""
+				self.event.HECHits.particles = (sorted(self.event.HECHits.particles,key = operator.attrgetter("E"), reverse = True))[:self.MAXBEATS]
+				print "number of HECHits (after beat cuts): " + str(self.event.HECHits.size())
+		
+				self.event.LArHits.particles = (sorted(self.event.LArHits.particles,key = operator.attrgetter("E"), reverse = True))[:self.MAXBEATS]
+				print "number of LArHits (after beat cuts): " + str(self.event.LArHits.size())
+				"""##############################################################"""
 				
 				self.event.Tracks = self.calcNonUniformDelays(self.event.Tracks)
 				self.event.RPC = self.calcNonUniformDelays(self.event.RPC) 
@@ -260,6 +251,9 @@ class Analysis(object):
 				a = np.empty(self.MAXBEATS)
 				inc = float(self.SECONDS)/float(self.MAXBEATS)
  				a.fill(inc)
+ 				a = np.append(a,0)
+ 				a = np.insert(a,0,0)
+ 				print "length: " + str(len(a))
 				delays = a
 				
 			else:
@@ -275,6 +269,9 @@ class Analysis(object):
 				
 				#change some delays to 0 
 				#delays.append(delay)
+			delays = np.append(delays,0)
+ 			delays = np.insert(delays,0,0)
+ 			print "length: " + str(len(delays))
 			particle_col.delays = delays
 	
 		return particle_col

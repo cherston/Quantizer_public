@@ -65,13 +65,14 @@ class OSC_engine:
 	def osc_scan_sendall(self,datasets,addr,delay): #sends data as single message per physics object 
 		oscmsg = OSC.OSCMessage(address="/%d%s" % (self.event_id, addr))
 		count = len(datasets[0])
+		time.sleep(delay[0])
 		for a in range(count): 
 			for dataset in datasets: 
 				oscmsg.append(dataset[a])
 			self.client.send(oscmsg) 
 			oscmsg.clearData()
 			if not self.sendall: 
-				time.sleep(delay[a])
+				time.sleep(delay[a+1])
 		return True
 				
 			

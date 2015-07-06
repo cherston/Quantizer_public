@@ -40,6 +40,7 @@ def audio_engine(a,q,spatialize):
   		try: 
 			global next_event_id
 			event=q.get()
+			print "Number of events left in queue =" + str(q.qsize())
 			event_id = next_event_id
 			next_event_id = (next_event_id + 1) % NUM_IDS  
 			print "Processing event number: " + str(COUNT)
