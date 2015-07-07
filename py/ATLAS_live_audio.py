@@ -140,9 +140,9 @@ def load_event(a,wait,overlap,spatialize):
 			print PATH_TO_UNPROCESSED_DATA
 			#print os.path.exists(PATH_TO_UNPROCESSED_DATA)
 	 
-			new_file = PATH_TO_UNPROCESSED_DATA + "/" + new[0], new_path
+			new_file = PATH_TO_UNPROCESSED_DATA + "/" + new[0]
 			if not os.path.isfile(new_file): 
-				os.rename(new_file)
+				os.rename(new_file, new_path)
 			if not overlap: 
 				q.put(new_path)
 				print "MAINTHREAD: next event added to queue"
