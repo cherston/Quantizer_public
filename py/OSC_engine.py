@@ -20,7 +20,7 @@ class OSC_engine:
 		self.threads=[]
 		# Init OSC
 		self.client = OSC.OSCClient()
-		self.client.connect(('127.0.0.1', 5001)) # first argument is the IP of the host, second argument is the port to use
+		self.client.connect(('127.0.0.1', 5000)) # first argument is the IP of the host, second argument is the port to use
 		self.data = None
 		#self.track_time = float(layer_ratio[0])
 		#self.calo_time = float(layer_ratio[1])
@@ -97,18 +97,23 @@ class OSC_engine:
 		thread.start()
 
 	def preamble(self):
-		#self.client.send(self.pkg_msg(str(self.data.etmiss.E),'/EventInfo/etmiss'))
+		#self.client.send(self.pkg_msg(str(self.data.etmiss.getE()),'/EventInfo/etmiss'))
 		#self.client.send(self.pkg_msg(self.data.Tracks.getEffectiveSum(),'/EventInfo/effectivesum'))
 	
+		msg1 = 0
+		msg2 = 0
+		
 		#test_bundles
-		
-		msg1 = self.pkg_msg(self.data.etmiss.E, '/EventInfo/etmiss')
+		if self.data.etmiss:
+			if self.data.etmiss.getE():  
+				msg1 = self.pkg_msg(self.data.etmiss.getE()[0], '/EventInfo/etmiss')
 		print "effective sum: " + str(self.data.Tracks.getEffectiveSum())
-		msg2 = self.pkg_msg(self.data.Tracks.getEffectiveSum(),'/EventInfo/effectivesum')
+		if self.data.Tracks.getEffectiveSum(): 
+			msg2 = self.pkg_msg(self.data.Tracks.getEffectiveSum(),'/EventInfo/effectivesum')
 		
-
 		msglast = self.pkg_msg(1.0, '/EventInfo/start')
-		self.osc_bnd_send([msg1,msg2])
+		if msg1 and msg2: 
+			self.osc_bnd_send([msg1,msg2])
 		self.client.send(msglast)
 		if self.frontload: 
 			time.sleep(5)

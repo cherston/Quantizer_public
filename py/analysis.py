@@ -47,11 +47,13 @@ class Analysis(object):
 		"""##############################################################"""
 	
 		#Apply artificial artificial track Pt cut 
-		signal = lambda x: abs(x.Pt) >= ARTIF_TRACK_CUT
-		print "number of Tracks (before cuts): " + str(self.event.Tracks.size())
-		self.event.Tracks = ParticleCollection(filter(signal, self.event.Tracks))
-		print "resuting track momentums: " + str(self.event.Tracks.getPt())
-		print "number of Tracks (after cuts): " + str(self.event.Tracks.size())
+		
+		if self.event.Tracks.size(): 
+			signal = lambda x: abs(x.Pt) >= ARTIF_TRACK_CUT
+			print "number of Tracks (before cuts): " + str(self.event.Tracks.size())
+			self.event.Tracks = ParticleCollection(filter(signal, self.event.Tracks))
+			print "resuting track momentums: " + str(self.event.Tracks.getPt())
+			print "number of Tracks (after cuts): " + str(self.event.Tracks.size())
 		
 		#Apply artificial cut on RPC: Top n phi values (which will then presumably be streamed to audio in order of eta coordinate) 
 		randomnum = randint(1,9)
@@ -70,27 +72,32 @@ class Analysis(object):
 		#5/29: THESE VALUES ARE ALL HARDCODED AND THE WHOLE IMPLEMENTATION SHOULD BE CLEANED UP FOR V2
 		"""##############################################################"""
 		
-		print "number of LArHits (before energy cuts): " + str(self.event.LArHits.size())
-		#print self.event.LArHits.getE()
-		signal = lambda x: x.E > .05 and x.E < 0.1
-		self.event.LArHits = ParticleCollection(filter(signal, self.event.LArHits))
-		print "number of LArHits (after energy cuts): " + str(self.event.LArHits.size())
+		if self.event.LArHits.size(): 
+			print "number of LArHits (before energy cuts): " + str(self.event.LArHits.size())
+			#print self.event.LArHits.getE()
+			signal = lambda x: x.E > .05 and x.E < 0.1
+			self.event.LArHits = ParticleCollection(filter(signal, self.event.LArHits))
+			print "number of LArHits (after energy cuts): " + str(self.event.LArHits.size())
 		
-		print "number of HECHits (before energy cuts): " + str(self.event.HECHits.size())
-		signal = lambda x: x.E > .61 and x.E < 1.2
-		self.event.HECHits = ParticleCollection(filter(signal, self.event.HECHits)) 
-		print "number of HECHits (after energy cuts): " + str(self.event.HECHits.size())
+		if self.event.HECHits.size(): 
+			print "number of HECHits (before energy cuts): " + str(self.event.HECHits.size())
+			signal = lambda x: x.E > .61 and x.E < 1.2
+			self.event.HECHits = ParticleCollection(filter(signal, self.event.HECHits)) 
+			print "number of HECHits (after energy cuts): " + str(self.event.HECHits.size())
 		
-		for p in self.event.Tracks.particles: 
-			if p.E < 5:
-				p.E = 5 + random.uniform(0,2)
-			if p.E > 40:
-				p.E = 40 
-		for p in self.event.RPC.particles: 
-			if p.Eta < -2.4:
-				p.Eta = -2.4
-			if p.Eta > 2.4:
-				p.Eta = 2.4
+		if self.event.Tracks.size(): 
+			for p in self.event.Tracks.particles: 
+				if p.E < 5:
+					p.E = 5 + random.uniform(0,2)
+				if p.E > 40:
+					p.E = 40 
+					
+		if self.event.RPC.size(): 
+			for p in self.event.RPC.particles: 
+				if p.Eta < -2.4:
+					p.Eta = -2.4
+				if p.Eta > 2.4:
+					p.Eta = 2.4
 		"""##############################################################"""		
 		
 		return self.event 
@@ -118,10 +125,13 @@ class Analysis(object):
 		self.TOTRANGE = self.MAX-self.MIN 
 			
 		if self.POLY: 
-			self.event.Tracks = self.calcPolyDelays(self.event.Tracks)
-			self.event.RPC = self.calcPolyDelays(self.event.RPC) 
-			#self.event.LArHits = self.calcPolyDelays(self.event.LArHits)
-			#self.event.HECHits = self.calcPolyDelays(self.event.HECHits)
+			if self.event.Tracks.size(): 
+				self.event.Tracks = self.calcPolyDelays(self.event.Tracks)
+			
+			if self.event.RPC.size(): 
+				self.event.RPC = self.calcPolyDelays(self.event.RPC) 
+				#self.event.LArHits = self.calcPolyDelays(self.event.LArHits)
+				#self.event.HECHits = self.calcPolyDelays(self.event.HECHits)
 			
 			
 			#keeps calo on beat
@@ -137,21 +147,32 @@ class Analysis(object):
 		 
 		else: 
  			if self.UNIFORM_DIST: 
-				self.event.RPC.particles, self.event.RPC.sparse_uniform_map = self.sparse_uniformcut(self.event.RPC)
-				self.event.Tracks.particles, self.event.Tracks.sparse_uniform_map = self.sparse_uniformcut(self.event.Tracks)
-			
-				LAr_intervals = np.linspace(self.MIN,self.MAX,self.MAXBEATS)
-				self.event.LArHits.particles = self.dense_uniformcut(self.event.LArHits,LAr_intervals)
-			
-				#NOTE: May want to change HEC_intervals to better reflect geometry 
-				HEC_intervals = np.linspace(self.MIN,self.MAX,self.MAXBEATS)
-				self.event.HECHits.particles = self.dense_uniformcut(self.event.HECHits,HEC_intervals)
+				if self.event.RPC.size(): 
+					self.event.RPC.particles, self.event.RPC.sparse_uniform_map = self.sparse_uniformcut(self.event.RPC)
 				
-	
-				self.event.Tracks = self.calcDelays(self.event.Tracks)
-				self.event.RPC = self.calcDelays(self.event.RPC) 
-				self.event.LArHits = self.calcDelays(self.event.LArHits)
-				self.event.HECHits = self.calcDelays(self.event.HECHits)
+				if self.event.Tracks.size(): 
+					self.event.Tracks.particles, self.event.Tracks.sparse_uniform_map = self.sparse_uniformcut(self.event.Tracks)
+			
+				if self.event.LArHits.size(): 
+					LAr_intervals = np.linspace(self.MIN,self.MAX,self.MAXBEATS)
+					self.event.LArHits.particles = self.dense_uniformcut(self.event.LArHits,LAr_intervals)
+			
+				if self.event.HECHits.size(): 
+					#NOTE: May want to change HEC_intervals to better reflect geometry 
+					HEC_intervals = np.linspace(self.MIN,self.MAX,self.MAXBEATS)
+					self.event.HECHits.particles = self.dense_uniformcut(self.event.HECHits,HEC_intervals)
+				
+				if self.event.Tracks.size(): 
+					self.event.Tracks = self.calcDelays(self.event.Tracks)
+				
+				if self.event.RPC.size(): 
+					self.event.RPC = self.calcDelays(self.event.RPC) 
+				
+				if self.event.LArHits.size(): 
+					self.event.LArHits = self.calcDelays(self.event.LArHits)
+				
+				if self.event.HECHits.size(): 
+					self.event.HECHits = self.calcDelays(self.event.HECHits)
 		
 			elif not self.UNIFORM_DIST:
 				

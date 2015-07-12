@@ -37,7 +37,7 @@ COUNT = 0
 def audio_engine(a,q,spatialize):
 	global COUNT
 	while (not q.full()):
-  		try: 
+ 
 			global next_event_id
 			event=q.get()
 			print "Number of events left in queue =" + str(q.qsize())
@@ -56,9 +56,9 @@ def audio_engine(a,q,spatialize):
 			else: 	
 				a.run() 
 			q.task_done()
-	  	except: 
-			print "NOT STREAMING EVENT" 
-			print(sys.exc_info())
+ 
+			#print "NOT STREAMING EVENT" 
+			#print(sys.exc_info())
 
 def audio_overlap(a,event,spatialize):
 		try:
@@ -124,27 +124,30 @@ def load_event(a,wait,overlap,spatialize):
 			if not wait:
 				if len(new) > 2:
 					for i in range(2,len(new)-1):
-						try:
-							print "trying to remove" + str(PATH_TO_UNPROCESSED_DATA + "/" + new[i])
-							os.remove(PATH_TO_UNPROCESSED_DATA + "/" + new[i])
-							print "removed"
-						except OSError:
-							pass
+						if not new.startswith('.'): 
+							try:
+								print "trying to remove" + str(PATH_TO_UNPROCESSED_DATA + "/" + new[i])
+								os.remove(PATH_TO_UNPROCESSED_DATA + "/" + new[i])
+								print "removed"
+							except OSError:
+								pass
 				new = os.listdir(PATH_TO_UNPROCESSED_DATA)
  
 		
 			time.sleep(1) 
 			 
-			new_path = PATH_TO_PROCESSED_DATA + "/" + new[0]
+			new_path = PATH_TO_PROCESSED_DATA + "/"
+			cur_file = PATH_TO_UNPROCESSED_DATA + "/" + new[0]
 			
 			print PATH_TO_UNPROCESSED_DATA
 			#print os.path.exists(PATH_TO_UNPROCESSED_DATA)
 	 
-			new_file = PATH_TO_UNPROCESSED_DATA + "/" + new[0]
-			if not os.path.isfile(new_file): 
-				os.rename(new_file, new_path)
+			new_file = new_path + new[0]
+			print "trying to move...."
+			os.rename(cur_file, new_file)
+
 			if not overlap: 
-				q.put(new_path)
+				q.put(new_file)
 				print "MAINTHREAD: next event added to queue"
 			else: 
 				Thread(target=audio_overlap, args=(a,new_path,spatialize,)).start()
