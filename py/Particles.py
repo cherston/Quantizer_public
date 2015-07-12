@@ -17,9 +17,9 @@ class Event(object):
 			self.HECHits = self.Store.getHECHits() 
 		if self.Store.getEtMiss(): 
 			self.etmiss = self.Store.getEtMiss()
-			print "LOOK: " + str(self.etmiss.getE())	
+			#print "LOOK: " + str(self.etmiss.getE())	
 		if self.Store.getTracks().particles: 
-			print "there are tracks: " + str(self.Store.getTracks().particles)
+			#print "there are tracks: " + str(self.Store.getTracks().particles)
 			self.Tracks = self.Store.getTracks()	
 		else:
 			self.Tracks  = ParticleCollection() 
