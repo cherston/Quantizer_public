@@ -105,8 +105,7 @@ class OSC_engine:
 		
 		#test_bundles
 		if self.data.etmiss:
-			if self.data.etmiss.E:  
-				msg1 = self.pkg_msg(self.data.etmiss.E, '/EventInfo/etmiss')
+			msg1 = self.pkg_msg(self.data.etmiss.E, '/EventInfo/etmiss')
 		print "effective sum: " + str(self.data.Tracks.getEffectiveSum())
 		if self.data.Tracks.getEffectiveSum(): 
 			msg2 = self.pkg_msg(self.data.Tracks.getEffectiveSum(),'/EventInfo/effectivesum')

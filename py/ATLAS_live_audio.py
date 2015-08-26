@@ -195,14 +195,14 @@ if __name__ == "__main__":
 		#make directories if they don't exist
 	directories = ["../data/unprocessed", "../data/processed", "../output"]
 	for d in directories: 
-		if not os.path.exists("../data/unprocessed"): 
+		if not os.path.exists(d): 
 			os.makedirs(d) 
 			
 	if args.test: 
 		#event ='1A/1A_41_190343_88636558_413.xml'
 		t0 = time.time()
-		#event = "../data/1A/1A_35_190343_42131192_187.xml"
-		event = "../data/JiveXML_264034_7064956_2015_05_May_com900GeV_minBias_noData.xml"
+		event = "../data/1A/1A_35_190343_42131192_187.xml"
+		#event = "../data/JiveXML_264034_7064956_2015_05_May_com900GeV_minBias_noData.xml"
 		a = OSC_engine(layer_ratio,send_all)
 		a.set_data(event,next_event_id, maxbeats,"Eta",seconds,unif,poly) 
 		print "time: " + str(time.time() - t0)
