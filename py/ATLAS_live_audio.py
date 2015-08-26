@@ -123,14 +123,13 @@ def load_event(a,wait,overlap,spatialize):
 			#if running in normal mode, ensure that files don't pile up beyond 2
 			if not wait:
 				if len(new) > 2:
-					for i in range(2,len(new)-1):
-						if not new.startswith('.'): 
-							try:
-								print "trying to remove" + str(PATH_TO_UNPROCESSED_DATA + "/" + new[i])
-								os.remove(PATH_TO_UNPROCESSED_DATA + "/" + new[i])
-								print "removed"
-							except OSError:
-								pass
+					for i in range(2,len(new)-1):					 
+						try:
+							print "trying to remove" + str(PATH_TO_UNPROCESSED_DATA + "/" + new[i])
+							os.remove(PATH_TO_UNPROCESSED_DATA + "/" + new[i])
+							print "removed"
+						except OSError:
+							pass
 				new = os.listdir(PATH_TO_UNPROCESSED_DATA)
  
 		
