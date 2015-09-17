@@ -198,17 +198,27 @@ if __name__ == "__main__":
 			os.makedirs(d) 
 			
 	if args.test: 
-		#event ='1A/1A_41_190343_88636558_413.xml'
-		t0 = time.time()
-		event = "../data/1A/1A_35_190343_42131192_187.xml"
-		#event = "../data/JiveXML_264034_7064956_2015_05_May_com900GeV_minBias_noData.xml"
-		a = OSC_engine(layer_ratio,send_all)
-		a.set_data(event,next_event_id, maxbeats,"Eta",seconds,unif,poly) 
-		print "time: " + str(time.time() - t0)
-		if args.spatialize: 
-			a.run_spatialize()
-		else: 
-			a.run() 
+		while 1: 
+			event = "../data/1A/1A_35_190343_42131192_187.xml"
+			#event = "../data/JiveXML_264034_7064956_2015_05_May_com900GeV_minBias_noData.xml"
+			a = OSC_engine(layer_ratio,send_all)
+			a.set_data(event,next_event_id, maxbeats,"Eta",seconds,unif,poly) 
+			if args.spatialize: 
+				a.run_spatialize()
+			else:
+				os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
+				os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
+				os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
+				a.run() 
+				
+				#dumping in a second event to test plot variations 
+				event2 ='../data/1A/1A_41_190343_88636558_413.xml'
+				a.set_data(event2,next_event_id, maxbeats,"Eta",seconds,unif,poly)
+				os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
+				os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
+				os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
+				a.run()  
+
 	
 	else:
 		if not args.overlap: 
