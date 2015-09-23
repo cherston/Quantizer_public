@@ -206,17 +206,17 @@ if __name__ == "__main__":
 			if args.spatialize: 
 				a.run_spatialize()
 			else:
-				os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
-				os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
-				os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
+				#os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
+				#os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
+				#os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
 				a.run() 
 				
 				#dumping in a second event to test plot variations 
 				event2 ='../data/1A/1A_41_190343_88636558_413.xml'
 				a.set_data(event2,next_event_id, maxbeats,"Eta",seconds,unif,poly)
-				os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
-				os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
-				os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
+				#os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
+				#os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
+				#os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
 				a.run()  
 
 	
