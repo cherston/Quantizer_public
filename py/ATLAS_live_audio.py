@@ -34,6 +34,7 @@ from random import randint
 
 next_event_id = 0
 send_all = False
+prevliv = True #monitors most recent check of whether collisions are live or not 
 NUM_IDS = 2
 COUNT = 0
 
@@ -52,7 +53,7 @@ def audio_engine(a,q,spatialize):
 			print "maxbeats: " + str(maxbeats)
 			print "geometry: " + str(geometry)
 			print "spatialize: " + str(spatialize)
-			
+
 			a.set_data(event,event_id,maxbeats,geometry,seconds,unif,poly) 
 			if spatialize: 
 				a.run_spatialize()
@@ -130,9 +131,9 @@ def load_event(a,wait,overlap,spatialize):
 			new = os.listdir(PATH_TO_RECENT_DATA)
 			with open('../output/live.txt', 'wb') as fp:
 				fp.write('n')
-
-		os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt") #upload live indicator: 
-		
+		if prevliv != live: 
+			os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt") #upload live indicator: 
+			prevliv = live 
 		if new and live:
 			#sort the list to make sure that we're removing the newest files 
 			#if running in normal mode, ensure that files don't pile up beyond 2 for realtime mode 
