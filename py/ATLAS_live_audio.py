@@ -15,6 +15,8 @@ port  = 9001
 #PATH_TO_PROCESSED_DATA = "/Users/TRIUMF-ATLAS-DISPLAY/Documents/ATLAS_sonification_2015_ewan/file_transfer_scripts/downloading/downloaded_xml_files/old"
 PATH_TO_UNPROCESSED_DATA = "../data/unprocessed"
 PATH_TO_PROCESSED_DATA = "../data/processed"
+PATH_TO_RECENT_DATA = "../data/recent_data"
+NUM_RECENT_FILES = 3
 
  
 
@@ -28,6 +30,7 @@ import os.path
 import sys
 import argparse
 import os
+from random import randint
 
 next_event_id = 0
 send_all = False
@@ -37,7 +40,6 @@ COUNT = 0
 def audio_engine(a,q,spatialize):
 	global COUNT
 	while (not q.full()):
- 
 			global next_event_id
 			event=q.get()
 			print "Number of events left in queue =" + str(q.qsize())
@@ -50,6 +52,7 @@ def audio_engine(a,q,spatialize):
 			print "maxbeats: " + str(maxbeats)
 			print "geometry: " + str(geometry)
 			print "spatialize: " + str(spatialize)
+			
 			a.set_data(event,event_id,maxbeats,geometry,seconds,unif,poly) 
 			if spatialize: 
 				a.run_spatialize()
@@ -113,14 +116,26 @@ def load_event(a,wait,overlap,spatialize):
 		print "You are running in a test mode that allowed you to put lots of files in the unprocessed directory" 
 		
 	while 1: 
-		new = os.listdir(PATH_TO_UNPROCESSED_DATA)
+		new_file = os.listdir(PATH_TO_UNPROCESSED_DATA)
 		if flag:
-			print "MAINTHREAD: waiting for next event..."
+			print "MAINTHREAD: waiting for next live event..."
 			flag = False
-			 
-		if new:
+		if new_file: 
+			live = True 
+			new = new_file
+			with open('../output/live.txt', 'wb') as fp: #this file is used to control a "live" indicator on the website
+				fp.write('y')
+		else: #this is for the case when there is no new file in the directory where REAL TIME files will be stored
+			live = False 
+			new = os.listdir(PATH_TO_RECENT_DATA)
+			with open('../output/live.txt', 'wb') as fp:
+				fp.write('n')
+
+		os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt") #upload live indicator: 
+		
+		if new and live:
 			#sort the list to make sure that we're removing the newest files 
-			#if running in normal mode, ensure that files don't pile up beyond 2
+			#if running in normal mode, ensure that files don't pile up beyond 2 for realtime mode 
 			if not wait:
 				if len(new) > 2:
 					for i in range(2,len(new)-1):					 
@@ -153,6 +168,13 @@ def load_event(a,wait,overlap,spatialize):
 				print "MAINTHREAD: processed next event" 
 			
 			flag = True 
+		else: #case where detector is off and queue is small, add another recent event 
+			if q.qsize() < 2: 
+				print "NOT LIVE: adding another recent event to the queue"
+				rand = randint(0,NUM_RECENT_FILES)
+				new_file = PATH_TO_RECENT_DATA + "/" + new[rand]
+				q.put(new_file)
+
 	
 if __name__ == "__main__":
 	

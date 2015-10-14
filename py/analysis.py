@@ -4,7 +4,8 @@ import operator
 from Utils import find_nearest
 import random
 import csv
-import time 
+import time
+import os 
 from random import randint
 
  
@@ -15,6 +16,7 @@ ARTIF_TRACK_CUT = 1 #Track Pt cut
 
 #should replace with a "None" of some sort to distinguish 0 from 'unpopulated' in sparse uniform map array
 HACK = 1000
+UPLOAD = True 
 
 class Analysis(object): 
 	def __init__(self, ev, beats, geo, seconds,unif,poly):
@@ -347,6 +349,14 @@ class Analysis(object):
 			if self.event.LArHits.particles: 
 				data = self.event.LArHits.getE()
 				a.writerow(data)
+		
+		#upload CSV files to web
+		if UPLOAD == True: 
+			os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
+			os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
+			os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
+
+
 	
 	def wait_for_beat(self,t0):
 		cur_time = time.time()-t0
