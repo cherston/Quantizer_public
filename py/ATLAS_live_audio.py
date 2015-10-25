@@ -34,6 +34,9 @@ from random import randint
 
 next_event_id = 0
 send_all = False
+
+front_load = False
+
 NUM_IDS = 2
 COUNT = 0
 
@@ -202,6 +205,9 @@ if __name__ == "__main__":
 	
 	if args.send_all: 
 		send_all = True
+
+	if args.preamble:
+		front_load = True
 	
 	if args.uniform:  
 		unif = True
@@ -223,7 +229,7 @@ if __name__ == "__main__":
 		while 1: 
 			event = "../data/1A/1A_35_190343_42131192_187.xml"
 			#event = "../data/JiveXML_264034_7064956_2015_05_May_com900GeV_minBias_noData.xml"
-			a = OSC_engine(layer_ratio,send_all)
+			a = OSC_engine(layer_ratio,send_all,front_load)
 			a.set_data(event,next_event_id, maxbeats,"Eta",seconds,unif,poly) 
 			if args.spatialize: 
 				a.run_spatialize()
@@ -245,7 +251,7 @@ if __name__ == "__main__":
 	else:
 		if not args.overlap: 
 			q = Queue(maxsize=900)
-			a = OSC_engine(layer_ratio,send_all)
+			a = OSC_engine(layer_ratio,send_all,front_load)
 			worker = Thread(target=audio_engine, args=(a,q,args.spatialize,))
 			worker.start()
 		
