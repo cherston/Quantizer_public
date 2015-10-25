@@ -128,7 +128,7 @@ class OSC_engine:
 		# opted to front-load sending event info 
 		print "starting time: " + str(time.time())
 
-		self.preamble()
+		#self.preamble()
 		
 		# sending remaining data multithreaded
 		

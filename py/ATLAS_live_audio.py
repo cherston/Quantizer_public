@@ -34,7 +34,6 @@ from random import randint
 
 next_event_id = 0
 send_all = False
-prevliv = True #monitors most recent check of whether collisions are live or not 
 NUM_IDS = 2
 COUNT = 0
 
@@ -111,7 +110,7 @@ def load_event(a,wait,overlap,spatialize):
 			time.sleep(8)
 	"""
 	#CODE BELOW IS THE CORRECT CODE
-	
+	prevliv = True #monitors most recent check of whether collisions are live or not 
 	flag = True 
 	if wait: 
 		print "You are running in a test mode that allowed you to put lots of files in the unprocessed directory" 
