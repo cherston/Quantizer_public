@@ -31,7 +31,7 @@ class Analysis(object):
 		self.event = ev
 		self.analyze()
  		self.setGeo(geo)
-		self.write_metadata()
+		#self.write_metadata()
 
 	def analyze(self):
 		#Apply eta basic cuts 
