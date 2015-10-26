@@ -134,7 +134,7 @@ def load_event(a,wait,overlap,spatialize):
 			with open('../output/live.txt', 'wb') as fp:
 				fp.write('n')
 		if prevliv != live: 
-			os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt") #upload live indicator: 
+			#os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt") #upload live indicator: 
 			prevliv = live 
 		if new and live:
 			#sort the list to make sure that we're removing the newest files 
