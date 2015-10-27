@@ -22,12 +22,12 @@ class OSC_engine:
 		self.client = OSC.OSCClient()
 		self.client.connect(('127.0.0.1', 5002)) # first argument is the IP of the host, second argument is the port to use
 		self.data = None
-		#self.track_time = float(layer_ratio[0])
-		#self.calo_time = float(layer_ratio[1])
-		#self.rpc_time = float(layer_ratio[2])
-		self.track_time = random.uniform(1,2)
-		self.calo_time = random.uniform(1,2)
-		self.rpc_time = random.uniform(1,2)
+		self.track_time = float(layer_ratio[0])
+		self.calo_time = float(layer_ratio[1])
+		self.rpc_time = float(layer_ratio[2])
+		#self.track_time = random.uniform(1,2)
+		#self.calo_time = random.uniform(1,2)
+		#self.rpc_time = random.uniform(1,2)
 		self.t0 = time.time() 
 		self.sendall = send_all
 		self.frontload = frontload
