@@ -53,29 +53,32 @@ def update_live(live_status):
 	os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
 
 def audio_engine(a,q,spatialize):
-	global COUNT
-	while (not q.full()):
-			global next_event_id
-			tupl=q.get()
-			event = tupl[1]
-			update_live(tupl[0])
-			print "Number of events left in queue =" + str(q.qsize())
-			event_id = next_event_id
-			next_event_id = (next_event_id + 1) % NUM_IDS  
-			print "Processing event number: " + str(COUNT)
-			COUNT+=1
-			 
-			print "Processing Event: ", event
-			print "maxbeats: " + str(maxbeats)
-			print "geometry: " + str(geometry)
-			print "spatialize: " + str(spatialize)
+	try: 
+		global COUNT
+		while (not q.full()):
+				global next_event_id
+				tupl=q.get()
+				event = tupl[1]
+				update_live(tupl[0])
+				print "Number of events left in queue =" + str(q.qsize())
+				event_id = next_event_id
+				next_event_id = (next_event_id + 1) % NUM_IDS  
+				print "Processing event number: " + str(COUNT)
+				COUNT+=1
+				 
+				print "Processing Event: ", event
+				print "maxbeats: " + str(maxbeats)
+				print "geometry: " + str(geometry)
+				print "spatialize: " + str(spatialize)
 
-			a.set_data(event,event_id,maxbeats,geometry,seconds,unif,poly) 
-			if spatialize: 
-				a.run_spatialize()
-			else: 	
-				a.run() 
-			q.task_done()
+				a.set_data(event,event_id,maxbeats,geometry,seconds,unif,poly) 
+				if spatialize: 
+					a.run_spatialize()
+				else: 	
+					a.run() 
+				q.task_done()
+	except: 
+		pass
  
 			#print "NOT STREAMING EVENT" 
 			#print(sys.exc_info())

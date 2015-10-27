@@ -31,7 +31,7 @@ class Analysis(object):
 		self.event = ev
 		self.analyze()
  		self.setGeo(geo)
-		#self.write_metadata()
+		self.write_metadata()
 
 	def analyze(self):
 		#Apply eta basic cuts 
@@ -352,11 +352,21 @@ class Analysis(object):
 		
 		#upload CSV files to web
 		if UPLOAD == True: 
-			os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
-			os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
-			os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
 
+			try: 
+				imgname = "/var/www/sonification/sonification/static/recent_events/JiveXML_" + str(self.event.event.RunNumber) + "_" + str(self.event.event.EventNumber) + ".png"
+				print imgname
+				os.system("ssh cherston@discern.media.mit.edu 'cp " + imgname + " /var/www/sonification/sonification/static/img/physics.png'")
+			except: 
+				pass
 
+			try: 
+				os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
+				os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
+				os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
+			except: 
+				pass
+			
 	
 	def wait_for_beat(self,t0):
 		cur_time = time.time()-t0

@@ -3,26 +3,26 @@ from Utils import *
 import XMLReader as reader 
 
 
-class Event(object): 
-	def __init__(self,event):
-		self.Store = reader.XMLReader() 
-		self.Store.parseFile(event)
-		if self.Store.getEventInfo():
-			self.event = self.Store.getEventInfo()
-		if self.Store.getRPC():
-			self.RPC = self.Store.getRPC() 
-		if self.Store.getLArHits():
-			self.LArHits = self.Store.getLArHits() 
-		if self.Store.getHECHits(): 
-			self.HECHits = self.Store.getHECHits() 
-		if self.Store.getEtMiss(): 
-			self.etmiss = self.Store.getEtMiss()
-			#print "LOOK: " + str(self.etmiss.getE())	
-		if self.Store.getTracks().particles: 
-			#print "there are tracks: " + str(self.Store.getTracks().particles)
-			self.Tracks = self.Store.getTracks()	
-		else:
-			self.Tracks  = ParticleCollection() 
+class Event(object):
+    def __init__(self,event):
+        self.Store = reader.XMLReader()
+        self.Store.parseFile(event)
+        if self.Store.getEventInfo():
+            self.event = self.Store.getEventInfo()
+        if self.Store.getRPC():
+            self.RPC = self.Store.getRPC() 
+        if self.Store.getLArHits():
+            self.LArHits = self.Store.getLArHits()
+        if self.Store.getHECHits():
+            self.HECHits = self.Store.getHECHits() 
+        if self.Store.getEtMiss():
+            self.etmiss = self.Store.getEtMiss()
+            #print "LOOK: " + str(self.etmiss.getE())
+        if self.Store.getTracks().particles:
+            #print "there are tracks: " + str(self.Store.getTracks().particles)
+            self.Tracks = self.Store.getTracks()
+        else:
+            self.Tracks  = ParticleCollection() 
 				
 class ParticleCollection(object): 
 	def __init__(self,particles = []):
