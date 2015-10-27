@@ -50,7 +50,7 @@ def update_live(live_status):
 			fp.write('n')
 		#print "we're not live"
 	
-	os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
+	#os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
 
 def audio_engine(a,q,spatialize):
 	global COUNT
@@ -135,6 +135,7 @@ def load_event(a,wait,overlap,spatialize):
 	while 1: 
 		new_file = os.listdir(PATH_TO_UNPROCESSED_DATA)
 		if new_file: 
+			print "there's a file in unprocessed"
 			live = True 
 			new = new_file
 			
@@ -177,7 +178,7 @@ def load_event(a,wait,overlap,spatialize):
 			 
 		else: #case where detector is off and queue is small, add another recent event 
 			if q.qsize() == 0: 
-				print "NOT LIVE: adding another recent event to the queue"
+				print "MAIN THREAD: NOT LIVE, Q SIZE:" + str(q.qsize()) + " adding another recent event to the queue"
 				rand = randint(0,NUM_RECENT_FILES)
 				new_file = PATH_TO_RECENT_DATA + "/" + new[rand]
 				q.put((live,new_file))
