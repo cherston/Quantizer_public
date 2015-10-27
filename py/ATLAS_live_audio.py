@@ -40,11 +40,25 @@ front_load = False
 NUM_IDS = 2
 COUNT = 0
 
+def update_live(live_status): 
+	if live_status == True: 
+		with open('../output/live.txt', 'wb') as fp: #this file is used to control a "live" indicator on the website
+			fp.write('y')
+		print "we're live!"
+	else: 
+		with open('../output/live.txt', 'wb') as fp: #this file is used to control a "live" indicator on the website
+			fp.write('n')
+		#print "we're not live"
+	
+	os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
+
 def audio_engine(a,q,spatialize):
 	global COUNT
 	while (not q.full()):
 			global next_event_id
-			event=q.get()
+			tupl=q.get()
+			event = tupl[1]
+			update_live(tupl[0])
 			print "Number of events left in queue =" + str(q.qsize())
 			event_id = next_event_id
 			next_event_id = (next_event_id + 1) % NUM_IDS  
@@ -66,6 +80,7 @@ def audio_engine(a,q,spatialize):
 			#print "NOT STREAMING EVENT" 
 			#print(sys.exc_info())
 
+#NOTE: 10/26/15 - THIS FUNCTION IS IN NEED OF UPDATING IF OVERLAP IS EVER TO BE USED 
 def audio_overlap(a,event,spatialize):
 		try:
 			global next_event_id
@@ -113,29 +128,19 @@ def load_event(a,wait,overlap,spatialize):
 			time.sleep(8)
 	"""
 	#CODE BELOW IS THE CORRECT CODE
-	prevliv = True #monitors most recent check of whether collisions are live or not 
-	flag = True 
+ 
 	if wait: 
 		print "You are running in a test mode that allowed you to put lots of files in the unprocessed directory" 
 		
 	while 1: 
 		new_file = os.listdir(PATH_TO_UNPROCESSED_DATA)
-		if flag:
-			print "MAINTHREAD: waiting for next live event..."
-			flag = False
 		if new_file: 
 			live = True 
 			new = new_file
-			with open('../output/live.txt', 'wb') as fp: #this file is used to control a "live" indicator on the website
-				fp.write('y')
+			
 		else: #this is for the case when there is no new file in the directory where REAL TIME files will be stored
 			live = False 
 			new = os.listdir(PATH_TO_RECENT_DATA)
-			with open('../output/live.txt', 'wb') as fp:
-				fp.write('n')
-		if prevliv != live: 
-			#os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt") #upload live indicator: 
-			prevliv = live 
 		if new and live:
 			#sort the list to make sure that we're removing the newest files 
 			#if running in normal mode, ensure that files don't pile up beyond 2 for realtime mode 
@@ -149,7 +154,7 @@ def load_event(a,wait,overlap,spatialize):
 						except OSError:
 							pass
 				new = os.listdir(PATH_TO_UNPROCESSED_DATA)
- 
+ 				
 		
 			time.sleep(1) 
 			 
@@ -164,23 +169,21 @@ def load_event(a,wait,overlap,spatialize):
 			os.rename(cur_file, new_file)
 
 			if not overlap: 
-				q.put(new_file)
-				print "MAINTHREAD: next event added to queue"
+				q.put((live,new_file))
+				print "MAINTHREAD: next event:" + str((live,new_file)) + " added to queue"
 			else: 
 				Thread(target=audio_overlap, args=(a,new_path,spatialize,)).start()
 				print "MAINTHREAD: processed next event" 
-			
-			flag = True 
+			 
 		else: #case where detector is off and queue is small, add another recent event 
-			if q.qsize() < 2: 
+			if q.qsize() == 0: 
 				print "NOT LIVE: adding another recent event to the queue"
 				rand = randint(0,NUM_RECENT_FILES)
 				new_file = PATH_TO_RECENT_DATA + "/" + new[rand]
-				q.put(new_file)
+				q.put((live,new_file))
 
-	
-if __name__ == "__main__":
-	
+
+if __name__ == "__main__":	
 	parser=argparse.ArgumentParser()
 	parser.add_argument("--geo", default='Eta', help="optional: select scanning geometry: 'Eta','Phi','absPhi' currently supported")
 	parser.add_argument("--maxbeats", default = '40',help = "optional: set a max number of beats per data stream to be read in. By default will select highest energy values")
