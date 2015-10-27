@@ -50,7 +50,7 @@ def update_live(live_status):
 			fp.write('n')
 		#print "we're not live"
 	
-	#os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
+	os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
 
 def audio_engine(a,q,spatialize):
 	global COUNT
@@ -135,7 +135,7 @@ def load_event(a,wait,overlap,spatialize):
 	while 1: 
 		new_file = os.listdir(PATH_TO_UNPROCESSED_DATA)
 		if new_file: 
-			print "there's a file in unprocessed"
+			print "there's a file in unprocessed 1/2"
 			live = True 
 			new = new_file
 			
@@ -143,6 +143,7 @@ def load_event(a,wait,overlap,spatialize):
 			live = False 
 			new = os.listdir(PATH_TO_RECENT_DATA)
 		if new and live:
+			print "there's a file in unprocessed 2/2"
 			#sort the list to make sure that we're removing the newest files 
 			#if running in normal mode, ensure that files don't pile up beyond 2 for realtime mode 
 			if not wait:
@@ -171,7 +172,7 @@ def load_event(a,wait,overlap,spatialize):
 
 			if not overlap: 
 				q.put((live,new_file))
-				print "MAINTHREAD: next event:" + str((live,new_file)) + " added to queue"
+				print "MAINTHREAD: WE'RE LIVE. next event:" + str((live,new_file)) + " added to queue"
 			else: 
 				Thread(target=audio_overlap, args=(a,new_path,spatialize,)).start()
 				print "MAINTHREAD: processed next event" 

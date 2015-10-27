@@ -20,7 +20,7 @@ class OSC_engine:
 		self.threads=[]
 		# Init OSC
 		self.client = OSC.OSCClient()
-		self.client.connect(('127.0.0.1', 5000)) # first argument is the IP of the host, second argument is the port to use
+		self.client.connect(('127.0.0.1', 5002)) # first argument is the IP of the host, second argument is the port to use
 		self.data = None
 		#self.track_time = float(layer_ratio[0])
 		#self.calo_time = float(layer_ratio[1])
