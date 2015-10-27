@@ -354,7 +354,7 @@ class Analysis(object):
 		if UPLOAD == True: 
 
 			try: 
-				imgname = "/var/www/sonification/sonification/static/img/recent_events/JiveXML_" + str(self.event.event.RunNumber) + "_" + str(self.event.event.EventNumber) + ".png"
+				imgname = "/var/www/sonification/sonification/static/img/recent_event_displays/JiveXML_" + str(self.event.event.RunNumber) + "_" + str(self.event.event.EventNumber) + ".png"
 				print imgname
 				os.system("ssh cherston@discern.media.mit.edu 'cp " + imgname + " /var/www/sonification/sonification/static/img/physics.png'")
 			except: 
