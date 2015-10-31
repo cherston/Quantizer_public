@@ -115,6 +115,7 @@ class OSC_engine:
 			self.osc_bnd_send([msg1,msg2])
 		self.client.send(msglast)
 		if self.frontload: 
+			print "waiting 5 seconds"
 			time.sleep(5)
 
 		 

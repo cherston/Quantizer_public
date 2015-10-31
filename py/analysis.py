@@ -16,7 +16,7 @@ ARTIF_TRACK_CUT = 1 #Track Pt cut
 
 #should replace with a "None" of some sort to distinguish 0 from 'unpopulated' in sparse uniform map array
 HACK = 1000
-UPLOAD = True 
+UPLOAD = False 
 
 class Analysis(object): 
 	def __init__(self, ev, beats, geo, seconds,unif,poly):

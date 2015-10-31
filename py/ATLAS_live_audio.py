@@ -31,13 +31,14 @@ import sys
 import argparse
 import os
 from random import randint
+from check_file import checker
 
 next_event_id = 0
 send_all = False
 
 front_load = False
 
-NUM_IDS = 2
+NUM_IDS = 1
 COUNT = 0
 
 def update_live(live_status): 
@@ -50,7 +51,7 @@ def update_live(live_status):
 			fp.write('n')
 		#print "we're not live"
 	
-	os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
+	#os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
 
 def audio_engine(a,q,spatialize):
 	try: 
@@ -172,20 +173,22 @@ def load_event(a,wait,overlap,spatialize):
 			new_file = new_path + new[0]
 			print "trying to move...."
 			os.rename(cur_file, new_file)
-
-			if not overlap: 
-				q.put((live,new_file))
-				print "MAINTHREAD: WE'RE LIVE. next event:" + str((live,new_file)) + " added to queue"
-			else: 
-				Thread(target=audio_overlap, args=(a,new_path,spatialize,)).start()
-				print "MAINTHREAD: processed next event" 
+			if checker(new_file): 
+				if not overlap: 
+					q.put((live,new_file))
+					print "MAINTHREAD: WE'RE LIVE. next event:" + str((live,new_file)) + " added to queue"
+				else: 
+					Thread(target=audio_overlap, args=(a,new_path,spatialize,)).start()
+					print "MAINTHREAD: processed next event" 
 			 
 		else: #case where detector is off and queue is small, add another recent event 
 			if q.qsize() == 0: 
 				print "MAIN THREAD: NOT LIVE, Q SIZE:" + str(q.qsize()) + " adding another recent event to the queue"
 				rand = randint(0,NUM_RECENT_FILES)
 				new_file = PATH_TO_RECENT_DATA + "/" + new[rand]
-				q.put((live,new_file))
+				
+				if checker(new_file): 
+					q.put((live,new_file))
 
 
 if __name__ == "__main__":	
