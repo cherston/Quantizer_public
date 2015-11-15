@@ -16,7 +16,6 @@ port  = 9001
 PATH_TO_UNPROCESSED_DATA = "../data/unprocessed"
 PATH_TO_PROCESSED_DATA = "../data/processed"
 PATH_TO_RECENT_DATA = "../data/recent_data"
-NUM_RECENT_FILES = 3
 
  
 
@@ -40,6 +39,7 @@ front_load = False
 
 NUM_IDS = 1
 COUNT = 0
+counter = 14
 
 def update_live(live_status): 
 	if live_status == True: 
@@ -54,35 +54,37 @@ def update_live(live_status):
 	#os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
 
 def audio_engine(a,q,spatialize):
-	try: 
-		global COUNT
-		while (not q.full()):
-				global next_event_id
-				tupl=q.get()
-				event = tupl[1]
-				update_live(tupl[0])
-				print "Number of events left in queue =" + str(q.qsize())
-				event_id = next_event_id
-				next_event_id = (next_event_id + 1) % NUM_IDS  
-				print "Processing event number: " + str(COUNT)
-				COUNT+=1
-				 
-				print "Processing Event: ", event
-				print "maxbeats: " + str(maxbeats)
-				print "geometry: " + str(geometry)
-				print "spatialize: " + str(spatialize)
+	while 1: 
+		try: 
+			global COUNT
+			while (not q.full()):
+					global next_event_id
+					tupl=q.get()
+					event = tupl[1]
+					update_live(tupl[0])
+					print "Number of events left in queue =" + str(q.qsize())
+					event_id = next_event_id
+					next_event_id = (next_event_id + 1) % NUM_IDS  
+					print "Processing event number: " + str(COUNT)
+					COUNT+=1
+					 
+					print "Processing Event: ", event
+					print "maxbeats: " + str(maxbeats)
+					print "geometry: " + str(geometry)
+					print "spatialize: " + str(spatialize)
 
-				a.set_data(event,event_id,maxbeats,geometry,seconds,unif,poly) 
-				if spatialize: 
-					a.run_spatialize()
-				else: 	
-					a.run() 
-				q.task_done()
-	except: 
-		pass
+					a.set_data(event,event_id,maxbeats,geometry,seconds,unif,poly) 
+					if spatialize: 
+						a.run_spatialize()
+					else: 	
+						a.run() 
+					q.task_done()
+					print "finished processing event: ", event
+		except: 
+			pass
  
-			#print "NOT STREAMING EVENT" 
-			#print(sys.exc_info())
+		
+			
 
 #NOTE: 10/26/15 - THIS FUNCTION IS IN NEED OF UPDATING IF OVERLAP IS EVER TO BE USED 
 def audio_overlap(a,event,spatialize):
@@ -132,14 +134,15 @@ def load_event(a,wait,overlap,spatialize):
 			time.sleep(8)
 	"""
 	#CODE BELOW IS THE CORRECT CODE
- 
+ 	global counter
 	if wait: 
 		print "You are running in a test mode that allowed you to put lots of files in the unprocessed directory" 
 		
 	while 1: 
+		 
 		new_file = os.listdir(PATH_TO_UNPROCESSED_DATA)
 		if new_file: 
-			print "there's a file in unprocessed 1/2"
+			print "live (file in unprocessed)"
 			live = True 
 			new = new_file
 			
@@ -182,13 +185,21 @@ def load_event(a,wait,overlap,spatialize):
 					print "MAINTHREAD: processed next event" 
 			 
 		else: #case where detector is off and queue is small, add another recent event 
-			if q.qsize() == 0: 
+			if q.qsize() < 2: 
 				print "MAIN THREAD: NOT LIVE, Q SIZE:" + str(q.qsize()) + " adding another recent event to the queue"
-				rand = randint(0,NUM_RECENT_FILES)
-				new_file = PATH_TO_RECENT_DATA + "/" + new[rand]
-				
+				num_recent_files = len(os.listdir(PATH_TO_RECENT_DATA))
+				print num_recent_files
+				print "MAINTHREAD: comparing counter"
+				if counter >= num_recent_files:
+					counter = 0 
+					 
+				new_file = PATH_TO_RECENT_DATA + "/" + new[counter]
+					
 				if checker(new_file): 
 					q.put((live,new_file))
+
+				counter += 1
+				print "counter: " + str(counter) + "most recently processed event: " + str(new_file)
 
 
 if __name__ == "__main__":	

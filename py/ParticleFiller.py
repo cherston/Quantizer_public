@@ -79,15 +79,15 @@ def getMuons(XMLNode, tracks):
     [muon.findClosestTrack(tracks, 0.05) for muon in MuonCollection]
     return MuonCollection
 
-def getRPC(XMLNode): 
-	nRPC = int(XMLNode.attrib["count"])
-	print "number of RPC: " + str(nRPC)
-	xs = getFloats(XMLNode, "x") 
-	ys = getFloats(XMLNode, "y") 
-	zs = getFloats(XMLNode, "z") 
-	if nRPC: 
-		RPCCollection = ParticleCollection(RPC(x = xs[i], y = ys[i], z = zs[i]) for i in range(nRPC))
-	return RPCCollection
+def getRPC(XMLNode):
+    nRPC = int(XMLNode.attrib["count"])
+    print "Rpc count: " + str(nRPC)
+    xs = getFloats(XMLNode, "x")
+    ys = getFloats(XMLNode, "y")
+    zs = getFloats(XMLNode, "z")
+    if nRPC: 
+        RPCCollection = ParticleCollection(RPC(x = xs[i], y = ys[i], z = zs[i]) for i in range(nRPC))
+    return RPCCollection
 	
 # #===========================================================
 
