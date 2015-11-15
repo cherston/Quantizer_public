@@ -5,9 +5,8 @@ from Utils import find_nearest
 import random
 import csv
 import time
-import os 
 from random import randint
-
+import subprocess
  
 
 # To use analysis class: first run analyze to apply data cuts. Then run SetGEO to calculate delays
@@ -16,7 +15,7 @@ ARTIF_TRACK_CUT = 1 #Track Pt cut
 
 #should replace with a "None" of some sort to distinguish 0 from 'unpopulated' in sparse uniform map array
 HACK = 1000
-UPLOAD = False 
+UPLOAD = True
 
 class Analysis(object): 
 	def __init__(self, ev, beats, geo, seconds,unif,poly):
@@ -356,14 +355,14 @@ class Analysis(object):
 			try: 
 				imgname = "/var/www/sonification/sonification/static/img/recent_event_displays/JiveXML_" + str(self.event.event.RunNumber) + "_" + str(self.event.event.EventNumber) + ".png"
 				print imgname
-				os.system("ssh cherston@discern.media.mit.edu 'cp " + imgname + " /var/www/sonification/sonification/static/img/physics.png'")
+				subprocess.Popen("ssh cherston@discern.media.mit.edu 'cp " + imgname + " /var/www/sonification/sonification/static/img/physics.png'",shell=True)
 			except: 
 				pass
 
 			try: 
-				os.system("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv")
-				os.system("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv")
-				os.system("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv")
+				subprocess.Popen("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv",shell=True)
+				subprocess.Popen("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv",shell=True)
+				subprocess.Popen("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv",shell=True)
 			except: 
 				pass
 			

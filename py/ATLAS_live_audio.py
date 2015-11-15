@@ -31,6 +31,7 @@ import argparse
 import os
 from random import randint
 from check_file import checker
+import subprocess
 
 next_event_id = 0
 send_all = False
@@ -51,7 +52,7 @@ def update_live(live_status):
 			fp.write('n')
 		#print "we're not live"
 	
-	#os.system("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt")
+	subprocess.Popen("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt",shell=True)
 
 def audio_engine(a,q,spatialize):
 	while 1: 
