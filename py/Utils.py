@@ -9,6 +9,13 @@ def deltaR(p1, p2):
     while (deltaphi < -math.pi): deltaphi += 2*math.pi;
     return math.sqrt(deltaeta**2 + deltaphi**2)
 
+def deltaR_orig(p1):
+    deltaeta = p1.Eta 
+    deltaphi = p1.Phi
+    while (deltaphi >= math.pi): deltaphi -= 2*math.pi;
+    while (deltaphi < -math.pi): deltaphi += 2*math.pi;
+    return math.sqrt(deltaeta**2 + deltaphi**2)
+
 def find_nearest(array,value):
 	idx = (np.abs(array-value)).argmin()
 	return idx

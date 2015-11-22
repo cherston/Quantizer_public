@@ -14,6 +14,7 @@ port  = 9001
 #PATH_TO_UNPROCESSED_DATA = "/Users/TRIUMF-ATLAS-DISPLAY/Documents/ATLAS_sonification_2015_ewan/file_transfer_scripts/downloading/downloaded_xml_files/latest"
 #PATH_TO_PROCESSED_DATA = "/Users/TRIUMF-ATLAS-DISPLAY/Documents/ATLAS_sonification_2015_ewan/file_transfer_scripts/downloading/downloaded_xml_files/old"
 PATH_TO_UNPROCESSED_DATA = "../data/unprocessed"
+PATH_TO_PROCESSING_DATA = "../data/processing"
 PATH_TO_PROCESSED_DATA = "../data/processed"
 PATH_TO_RECENT_DATA = "../data/recent_data"
 
@@ -52,7 +53,7 @@ def update_live(live_status):
 			fp.write('n')
 		#print "we're not live"
 	
-	subprocess.Popen("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt",shell=True)
+	#subprocess.Popen("scp ../output/live.txt cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/live.txt",shell=True)
 
 def audio_engine(a,q,spatialize):
 	while 1: 
@@ -81,10 +82,18 @@ def audio_engine(a,q,spatialize):
 						a.run() 
 					q.task_done()
 					print "finished processing event: ", event
+					finalmove(event)
 		except: 
 			pass
  
-		
+
+def finalmove(event):
+			new = os.listdir(PATH_TO_PROCESSING_DATA)
+			new_path = PATH_TO_PROCESSED_DATA + "/" + new[0]
+			cur_file = PATH_TO_PROCESSING_DATA + "/" + new[0]
+	 
+			print "trying to move...."
+			os.rename(cur_file, new_file)	
 			
 
 #NOTE: 10/26/15 - THIS FUNCTION IS IN NEED OF UPDATING IF OVERLAP IS EVER TO BE USED 
@@ -168,14 +177,14 @@ def load_event(a,wait,overlap,spatialize):
 		
 			time.sleep(1) 
 			 
-			new_path = PATH_TO_PROCESSED_DATA + "/"
+			new_path = PATH_TO_PROCESSING_DATA + "/"
 			cur_file = PATH_TO_UNPROCESSED_DATA + "/" + new[0]
 			
 			print PATH_TO_UNPROCESSED_DATA
 			#print os.path.exists(PATH_TO_UNPROCESSED_DATA)
 	 
 			new_file = new_path + new[0]
-			print "trying to move...."
+			print "trying to move to processing directory...."
 			os.rename(cur_file, new_file)
 			if checker(new_file): 
 				if not overlap: 

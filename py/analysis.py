@@ -1,7 +1,7 @@
 import numpy as np
 from Particles import ParticleCollection, Event
 import operator
-from Utils import find_nearest
+from Utils import find_nearest, deltaR_orig
 import random
 import csv
 import time
@@ -15,7 +15,7 @@ ARTIF_TRACK_CUT = 1 #Track Pt cut
 
 #should replace with a "None" of some sort to distinguish 0 from 'unpopulated' in sparse uniform map array
 HACK = 1000
-UPLOAD = True
+UPLOAD = False
 
 class Analysis(object): 
 	def __init__(self, ev, beats, geo, seconds,unif,poly):
@@ -57,12 +57,13 @@ class Analysis(object):
 			print "number of Tracks (after cuts): " + str(self.event.Tracks.size())
 		
 		#Apply artificial cut on RPC: Top n phi values (which will then presumably be streamed to audio in order of eta coordinate) 
-		randomnum = randint(1,9)
 		if self.event.RPC.size() > int(self.MAXBEATS/2): 
-			num = randint(self.MAXBEATS/2,self.MAXBEATS)
+			signal = lambda x: deltaR_orig(x) < 2
 			print "number of RPC (before cuts): " + str(self.event.RPC.size())
-			self.event.RPC.particles = (sorted(self.event.RPC.particles,key = operator.attrgetter("Phi"), reverse = True))[:num]
-			print "number of RPC (after cuts): " + str(self.event.RPC.size())
+			for p in self.event.RPC.particles: 
+				print deltaR_orig(p)
+			self.event.RPC = ParticleCollection(filter(signal, self.event.RPC))
+ 			print "number of RPC (after cuts): " + str(self.event.RPC.size())
 		else:
 			print "number of RPC (no cuts): " + str(self.event.RPC.size())
 
@@ -89,7 +90,7 @@ class Analysis(object):
 		if self.event.Tracks.size(): 
 			for p in self.event.Tracks.particles: 
 				if p.E < 5:
-					p.E = 5 + random.uniform(0,2)
+					p.E = 5
 				if p.E > 40:
 					p.E = 40 
 					
@@ -355,11 +356,13 @@ class Analysis(object):
 			try: 
 				imgname = "/var/www/sonification/sonification/static/img/recent_event_displays/JiveXML_" + str(self.event.event.RunNumber) + "_" + str(self.event.event.EventNumber) + ".png"
 				print imgname
+
 				subprocess.Popen("ssh cherston@discern.media.mit.edu 'cp " + imgname + " /var/www/sonification/sonification/static/img/physics.png'",shell=True)
 			except: 
 				pass
 
 			try: 
+				print "loading"
 				subprocess.Popen("scp ../output/event_metadata.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_metadata.csv",shell=True)
 				subprocess.Popen("scp ../output/event_audio.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/event_audio.csv",shell=True)
 				subprocess.Popen("scp ../output/calo_beats.csv cherston@discern.media.mit.edu:/var/www/sonification/sonification/static/calo_beats.csv",shell=True)
