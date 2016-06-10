@@ -54,10 +54,9 @@
 -1 -1;
 #X obj 590 -355 OSC/routeOSC /RPC /Tracks /LArHits /HECHits /EventInfo
 ;
--#X floatatom 1153 -307 5 0 0 0 - - etmiss;
+#X floatatom 1153 -307 5 0 0 0 - - etmiss;
 #X floatatom 1194 -311 5 0 0 0 - - effectivesum;
-  #X floatatom 1194 -311 5 0 0 0 - - effectivesum;
- -#X obj 1093 -344 OSC/routeOSC /etmiss /effectivesum;
+#X obj 1093 -344 OSC/routeOSC /etmiss /effectivesum;
 #X obj 652 -332 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 592 -391 OSC/routeOSC /0 /1 /2;
@@ -113,7 +112,7 @@
 #X obj 349 -274 bng 15 250 50 0 empty metrob empty 17 7 0 10 -262144
 -1 -1;
 #X msg 486 -202 1.72145 -1.96607 6.69342 0.353874 1.3308;
-#X obj 591 -443 iemnet/udpreceive 5002;
+#X obj 591 -443 iemnet/udpreceive 5000;
 #X obj 308 -477 import mrpeach;
 #X connect 3 0 5 0;
 #X connect 3 0 6 0;
