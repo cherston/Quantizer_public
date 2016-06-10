@@ -54,9 +54,8 @@
 -1 -1;
 #X obj 590 -355 OSC/routeOSC /RPC /Tracks /LArHits /HECHits /EventInfo
 ;
-#X floatatom 1153 -307 5 0 0 0 - - etmiss;
 #X floatatom 1194 -311 5 0 0 0 - - effectivesum;
-#X obj 1093 -344 OSC/routeOSC /etmiss /effectivesum;
+#X obj 1093 -344 OSC/routeOSC /effectivesum;
 #X obj 652 -332 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 592 -391 OSC/routeOSC /0 /1 /2;
