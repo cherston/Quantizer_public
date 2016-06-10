@@ -128,8 +128,8 @@ class OSC_engine:
 			self.anal.wait_for_beat(self.t0) 
 		# opted to front-load sending event info 
 		print "starting time: " + str(time.time())
-
-		#self.preamble()
+		
+		self.preamble()
 		
 		# sending remaining data multithreaded
 		
