@@ -7,7 +7,7 @@
 #  - In a different tab run this script:   python atlantis-xmlrpc-test.py
 #  - Make sure the event file below exists
 #
-port  = 9001
+port  = 5002
 #PATH_TO_DATA = "/Users/jcherston/Dropbox/Sonification_dist/1A"
 
 #Below are paths to the unprocessed/processed data folders on the machine we are using to launch the platform
